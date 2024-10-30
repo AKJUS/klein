@@ -207,10 +207,12 @@ jobs:
             python-version: "3.12.0"
             twisted-version: "23.8"
             tox-prefix: "test"
+            optional: false
           - os: "ubuntu-latest"
             python-version: "3.13.0"
             twisted-version: "24.10"
             tox-prefix: "test"
+            optional: false
 
     steps:
 
