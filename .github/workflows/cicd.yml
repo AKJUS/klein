@@ -199,12 +199,12 @@ jobs:
         optional: [false]
         include:
           - os: "ubuntu-latest"
-            python-version: "pypy-3.8"
+            python-version: "pypy-3.9"
             twisted-version: "23.8"
             tox-prefix: "test"
             optional: false
           - os: "ubuntu-latest"
-            python-version: "pypy-3.9"
+            python-version: "pypy-3.10"
             twisted-version: "23.8"
             tox-prefix: "test"
             optional: false
