@@ -193,18 +193,18 @@ jobs:
     strategy:
       matrix:
         os: ["ubuntu-latest"]
-        python-version: ["3.7", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
         twisted-version: ["21.2", "22.1", "23.8"]
         tox-prefix: ["coverage"]
         optional: [false]
         include:
           - os: "ubuntu-latest"
-            python-version: "pypy-3.8"
+            python-version: "pypy-3.9"
             twisted-version: "23.8"
             tox-prefix: "test"
             optional: false
           - os: "ubuntu-latest"
-            python-version: "pypy-3.9"
+            python-version: "pypy-3.10"
             twisted-version: "23.8"
             tox-prefix: "test"
             optional: false
@@ -266,9 +266,9 @@ jobs:
 
       - name: Upload Trial log artifact
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: trial
+          name: "trial-py${{ matrix.python-version }}-twisted${{ matrix.twisted-version }}-os${{ matrix.os }}"
           path: .tox/${TOX_ENV}/log/trial.log
 
       # Use the latest supported Python version for combining coverage to
