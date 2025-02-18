@@ -12,4 +12,4 @@ Tubes==0.2.1
 Werkzeug==3.0.6; python_version > '3.7'
 Werkzeug==2.1.2; python_version <= '3.7'
 zope.interface==6.2; python_version < '3.13'
-zope.interface==7.0.3; python_version >= '3.13'
+zope.interface==7.2; python_version >= '3.13'
