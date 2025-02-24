@@ -44,8 +44,9 @@ from twisted.web.template import Tag
 
 from ._decorators import modified, named
 from ._interfaces import IKleinRequest, KleinQueryValue
+from ._paramspec_workaround import _normalFunction, _werkzeugRuleArgs
 from ._resource import KleinResource, route_metadata
-from ._typing_compat import Concatenate, ParamSpec, Protocol
+from ._typing_compat import ParamSpec, Protocol
 
 
 _KleinSynchronousRenderable = Union[
@@ -195,64 +196,6 @@ R = TypeVar("R", covariant=True)
 P = ParamSpec("P")
 
 
-class _PartialRouteSignature(Protocol[R]):
-    def __call__(
-        _self,
-        self: Klein,
-        url: str,
-        *args: Any,
-        branch: bool = False,
-        **kwargs: Any,
-    ) -> R:
-        """
-        This is the portion of the signature of C{route} which Klein owns.
-        """
-
-
-class _FullRouteSignature(Protocol[P, R]):
-    def __call__(
-        _self,
-        self: Klein,
-        url: str,
-        *args: P.args,
-        branch: bool = False,
-        **kwargs: P.kwargs,
-    ) -> R:
-        """
-        This integrates L{_PartialRouteSignature} with L{Rule}.
-        """
-
-
-def _removeStringArg(rule: Callable[Concatenate[str, P], R]) -> Callable[P, R]:
-    """
-    We call the 'string' argument to Rule 'url', so we need to remove it.
-    """
-    return None  # type:ignore[return-value]
-
-
-def _routeArgsFrom(
-    argProvider: Callable[P, object]
-) -> Callable[[_PartialRouteSignature[R]], _FullRouteSignature[P, R]]:
-    def decorator(
-        decoratee: _PartialRouteSignature[R],
-    ) -> _FullRouteSignature[P, R]:
-        return decoratee
-
-    return decorator
-
-
-def _normalFunction(arg: Callable[P, R]) -> Callable[P, R]:
-    """
-    Indicate to Mypy that the decorated callable is in fact a normal
-    user-defined function, so that it will be treated as a descriptor with a
-    C{self} that binds as a method.
-
-    @see: U{<mypy's confusing treatment of callables>
-        https://github.com/python/mypy/issues/15189}
-    """
-    return arg
-
-
 # end argument-processing hack
 
 
@@ -379,7 +322,7 @@ class Klein:
         return segment_count
 
     @_normalFunction
-    @_routeArgsFrom(_removeStringArg(Rule))
+    @_werkzeugRuleArgs
     def route(
         self,
         url: str,
