@@ -47,14 +47,11 @@ _Self = TypeVar("_Self")
 
 
 class _Numeric(Protocol):
-    def __float__(self) -> float:
-        ...
+    def __float__(self) -> float: ...
 
-    def __lt__(self: _Self, other: _Self) -> bool:
-        ...
+    def __lt__(self: _Self, other: _Self) -> bool: ...
 
-    def __gt__(self: _Self, other: _Self) -> bool:
-        ...
+    def __gt__(self: _Self, other: _Self) -> bool: ...
 
 
 _N = TypeVar("_N", bound=_Numeric)
@@ -282,8 +279,7 @@ class Field:
         maximum: Optional[float] = None,
         kind: Callable[[str], float] = float,
         **kw: Any,
-    ) -> "Field":
-        ...
+    ) -> "Field": ...
 
     @overload
     @classmethod
@@ -294,8 +290,7 @@ class Field:
         *,
         kind: Callable[[str], _N],
         **kw: Any,
-    ) -> "Field":
-        ...
+    ) -> "Field": ...
 
     @overload
     @classmethod
@@ -305,8 +300,7 @@ class Field:
         maximum: _N,
         kind: Callable[[str], _N],
         **kw: Any,
-    ) -> "Field":
-        ...
+    ) -> "Field": ...
 
     @classmethod
     def number(

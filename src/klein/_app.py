@@ -445,16 +445,14 @@ class Klein:
         self,
         f_or_exception: KleinErrorHandler,
         *additional_exceptions: Type[Exception],
-    ) -> Callable[[KleinErrorHandler], Callable]:
-        ...  # pragma: no cover
+    ) -> Callable[[KleinErrorHandler], Callable]: ...  # pragma: no cover
 
     @overload
     def handle_errors(
         self,
         f_or_exception: Type[Exception],
         *additional_exceptions: Type[Exception],
-    ) -> Callable[[KleinErrorHandler], Callable]:
-        ...  # pragma: no cover
+    ) -> Callable[[KleinErrorHandler], Callable]: ...  # pragma: no cover
 
     def handle_errors(
         self,

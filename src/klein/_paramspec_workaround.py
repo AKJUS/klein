@@ -75,14 +75,12 @@ if TYPE_CHECKING:
     class WithStringArg(Protocol[P, R_co]):
         def __call__(
             self, string: str, *args: P.args, **kwargs: P.kwargs
-        ) -> R_co:
-            ...
+        ) -> R_co: ...
 
     class WithURLArg(Protocol[P, R_co]):
         def __call__(
             _self, self: Klein, url: str, *args: P.args, **kwargs: P.kwargs
-        ) -> R_co:
-            ...
+        ) -> R_co: ...
 
     def _adjustArgs(rule: WithStringArg[P, R]) -> WithURLArg[P, R]:
         """
@@ -97,8 +95,7 @@ if TYPE_CHECKING:
     _checkRuleArgs: _RuleCopy[[], Rule] = _adjustArgs(Rule)
 
 
-def kwOnlyBranchArg(*, branch: bool = False) -> None:
-    ...
+def kwOnlyBranchArg(*, branch: bool = False) -> None: ...
 
 
 class _PartialRouteSignature(Protocol[R_co]):

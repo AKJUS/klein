@@ -555,7 +555,7 @@ class KleinResourceTests(SynchronousTestCase):
         d = _render(self.kr, request)
 
         self.assertFired(d)
-        self.assertEqual(request.getWrittenData(), b"\xE2\x98\x83")
+        self.assertEqual(request.getWrittenData(), b"\xe2\x98\x83")
 
     def test_renderNone(self) -> None:
         app = self.app

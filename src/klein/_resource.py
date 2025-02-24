@@ -310,7 +310,7 @@ class KleinResource(Resource):
         d.addErrback(processing_failed, self._app._error_handlers)
 
         def write_response(
-            r: Union[_StandInResource, str, bytes, int, None]
+            r: Union[_StandInResource, str, bytes, int, None],
         ) -> None:
             if r is StandInResource:
                 return
