@@ -89,7 +89,7 @@ class _RuleCopy(Protocol[P, R_co]):
         websocket: bool = False,
         *args: P.args,
         **kwargs: P.kwargs,
-    ) -> Rule:
+    ) -> R_co:
         """
         The constructor signature for L{Rule}.
         """
