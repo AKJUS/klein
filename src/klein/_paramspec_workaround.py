@@ -39,18 +39,6 @@ R = TypeVar("R")
 R_co = TypeVar("R_co", covariant=True)
 
 
-class WithStringArg(Protocol[P, R_co]):
-    def __call__(self, string: str, *args: P.args, **kwargs: P.kwargs) -> R_co:
-        ...
-
-
-class WithURLArg(Protocol[P, R_co]):
-    def __call__(
-        _self, self: Klein, url: str, *args: P.args, **kwargs: P.kwargs
-    ) -> R_co:
-        ...
-
-
 class _RuleCopy(Protocol[P, R_co]):
     """
     Workaround for the lack of U{keyword-only arguments with ParamSpec
@@ -84,6 +72,18 @@ class _RuleCopy(Protocol[P, R_co]):
 
 if TYPE_CHECKING:
 
+    class WithStringArg(Protocol[P, R_co]):
+        def __call__(
+            self, string: str, *args: P.args, **kwargs: P.kwargs
+        ) -> R_co:
+            ...
+
+    class WithURLArg(Protocol[P, R_co]):
+        def __call__(
+            _self, self: Klein, url: str, *args: P.args, **kwargs: P.kwargs
+        ) -> R_co:
+            ...
+
     def _adjustArgs(rule: WithStringArg[P, R]) -> WithURLArg[P, R]:
         """
         We call our equivalent to the C{string} argument to L{Rule} C{url}, and
@@ -91,7 +91,8 @@ if TYPE_CHECKING:
         """
 
     """
-    Ensure that we match Rule's signature precisely.
+    Ensure that we match L{Rule}'s signature precisely, by checking against the
+    installed upstream library.
     """
     _checkRuleArgs: _RuleCopy[[], Rule] = _adjustArgs(Rule)
 

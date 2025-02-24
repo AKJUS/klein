@@ -46,7 +46,7 @@ from ._decorators import modified, named
 from ._interfaces import IKleinRequest, KleinQueryValue
 from ._paramspec_workaround import _normalFunction, _werkzeugRuleArgs
 from ._resource import KleinResource, route_metadata
-from ._typing_compat import ParamSpec, Protocol
+from ._typing_compat import Protocol
 
 
 _KleinSynchronousRenderable = Union[
@@ -187,16 +187,6 @@ registerAdapter(KleinRequest, Request, IKleinRequest)
 
 
 ErrorMethods = List[Tuple[List[Type[Exception]], KleinErrorMethod]]
-
-
-# begin argument-processing hack to copy all args from current installed
-# version of Rule to @route's *args and **kwargs
-
-R = TypeVar("R", covariant=True)
-P = ParamSpec("P")
-
-
-# end argument-processing hack
 
 
 class Klein:
