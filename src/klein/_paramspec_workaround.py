@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING, Any, Callable, Iterable, Mapping, TypeVar
 
 from werkzeug.routing import Rule
 
-from ._typing_compat import Concatenate, ParamSpec, Protocol
+from ._typing_compat import ParamSpec, Protocol
 
 
 if TYPE_CHECKING:
@@ -49,20 +49,6 @@ class WithURLArg(Protocol[P, R_co]):
         _self, self: Klein, url: str, *args: P.args, **kwargs: P.kwargs
     ) -> R_co:
         ...
-
-
-def _renameStringArg(rule: WithStringArg[P, R]) -> WithURLArg[P, R]:
-    """
-    We call the 'string' argument to Rule 'url'.
-    """
-    return None  # type:ignore[return-value]
-
-
-def _addUrlArg(rule: Callable[Concatenate[str, P], R]) -> Callable[P, R]:
-    """
-    We call the 'string' argument to Rule 'url', so we need to remove it.
-    """
-    return None  # type:ignore[return-value]
 
 
 class _RuleCopy(Protocol[P, R_co]):
@@ -91,12 +77,23 @@ class _RuleCopy(Protocol[P, R_co]):
         **kwargs: P.kwargs,
     ) -> R_co:
         """
-        The constructor signature for L{Rule}.
+        The constructor signature for L{Rule}, with the modifications described
+        in L{_adjustArgs}.
         """
 
 
 if TYPE_CHECKING:
-    _checkRuleArgs: _RuleCopy[[], Rule] = _renameStringArg(Rule)
+
+    def _adjustArgs(rule: WithStringArg[P, R]) -> WithURLArg[P, R]:
+        """
+        We call our equivalent to the C{string} argument to L{Rule} C{url}, and
+        we need to add a L{Klein} C{self}.
+        """
+
+    """
+    Ensure that we match Rule's signature precisely.
+    """
+    _checkRuleArgs: _RuleCopy[[], Rule] = _adjustArgs(Rule)
 
 
 def kwOnlyBranchArg(*, branch: bool = False) -> None:
