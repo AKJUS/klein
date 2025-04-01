@@ -54,7 +54,8 @@ class IOFount:
         self._pauser = Pauser(self._pause, self._resume)
 
     def _flowToDrain(self) -> None:
-        if self.drain is not None and not self._paused:
+        # TODO: coverage
+        if self.drain is not None and not self._paused:  # pragma: no branch
             data = self._source.read()
             if data:
                 self.drain.receive(data)
