@@ -27,7 +27,7 @@ repos:
           - --remove-unused-variables
 
   - repo: https://github.com/PyCQA/flake8
-    rev: "7.1.2"
+    rev: "7.2.0"
     hooks:
       - id: flake8
         additional_dependencies:
@@ -40,9 +40,9 @@ repos:
           - "flake8-mutable==1.2.0"
           - "flake8-pep3101==2.1.0"
           - "pep8-naming==0.14.1"
-          - "pycodestyle==2.12.1"
+          - "pycodestyle==2.13.0"
           - "pydocstyle==6.3.0"
-          - "pyflakes==3.2.0"
+          - "pyflakes==3.3.2"
 
   - repo: https://github.com/asottile/yesqa
     rev: "v1.5.0"
@@ -55,9 +55,9 @@ repos:
           - "flake8-mutable==1.2.0"
           - "flake8-pep3101==2.1.0"
           - "pep8-naming==0.14.1"
-          - "pycodestyle==2.12.1"
+          - "pycodestyle==2.13.0"
           - "pydocstyle==6.3.0"
-          - "pyflakes==3.2.0"
+          - "pyflakes==3.3.2"
         pass_filenames: false
 
   - repo: https://github.com/PyCQA/isort
