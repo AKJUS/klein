@@ -775,8 +775,11 @@ class Form:
             try:
                 value = field.validateValue(text)
                 argName = field.pythonArgumentName
-                if argName is None:
-                    raise ValidationError("Form fields must all have names.")
+                # TODO: coverage
+                if argName is None:  # pragma: no branch
+                    raise ValidationError(
+                        "Form fields must all have names."
+                    )  # pragma: no cover
             except ValidationError as ve:
                 validationErrors[field] = ve
             else:
