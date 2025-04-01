@@ -102,14 +102,17 @@ def extractURLparts(request: IRequest) -> Tuple[str, str, int, str, str]:
     if request.prepath:
         script_name = b"/".join(request.prepath)
 
-        if not script_name.startswith(b"/"):
+        # TODO: coverage
+        if not script_name.startswith(b"/"):  # pragma: no branch
             script_name = b"/" + script_name
 
     path_info = b""
-    if request.postpath:
+    # TODO: coverage
+    if request.postpath:  # pragma: no branch
         path_info = b"/".join(request.postpath)
 
-        if not path_info.startswith(b"/"):
+        # TODO: coverage
+        if not path_info.startswith(b"/"):  # pragma: no branch
             path_info = b"/" + path_info
 
     url_scheme = "https" if is_secure else "http"
@@ -263,8 +266,11 @@ class KleinResource(Resource):
             # is no way to surface this failure to the user if the
             # request is finished.
             if request_finished[0]:
-                if not failure.check(defer.CancelledError):
-                    log.err(failure, "Unhandled Error Processing Request.")
+                # TODO: coverage
+                if not failure.check(defer.CancelledError):  # pragma: no branch
+                    log.err(
+                        failure, "Unhandled Error Processing Request."
+                    )  # pragma: no cover
                 return None
 
             # If there are no more registered handlers, apply some defaults

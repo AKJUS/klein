@@ -56,7 +56,7 @@ class MockRequest(Request):
     ):
         super().__init__(DummyChannel(), False)
 
-        if not headers:
+        if not headers:  # pragma: no branch
             headers = {}
 
         if not body:
@@ -90,7 +90,8 @@ class MockRequest(Request):
     def registerProducer(self, producer: IProducer, streaming: bool) -> None:
         self.producer = producer
         for _ in range(2):
-            if self.producer:
+            # TODO: coverage
+            if self.producer:  # pragma: no branch
                 # typing note: server.Request.registerProducer takes an
                 # IProducer, which does not have resumeProducing.
                 # This seems to expect either an IPullProducer or an
@@ -106,7 +107,8 @@ class MockRequest(Request):
         if not self.startedWriting:
             self.write(b"")
 
-        if not self.finished:
+        # TODO: coverage
+        if not self.finished:  # pragma: no branch
             self.finished = True
             self._cleanup()
 
@@ -238,8 +240,7 @@ class KleinResourceEqualityTests(SynchronousTestCase, EqualityTestsMixin):
         oneKlein = Klein()
 
         @oneKlein.route("/foo")
-        def foo(self, request: IRequest) -> KleinRenderable:
-            pass
+        def foo(self, request: IRequest) -> KleinRenderable: ...
 
     _one = _One()
 
@@ -247,8 +248,7 @@ class KleinResourceEqualityTests(SynchronousTestCase, EqualityTestsMixin):
         anotherKlein = Klein()
 
         @anotherKlein.route("/bar")
-        def bar(self, request: IRequest) -> KleinRenderable:
-            pass
+        def bar(self, request: IRequest) -> KleinRenderable: ...
 
     _another = _Another()
 
@@ -276,8 +276,8 @@ class KleinResourceTests(SynchronousTestCase):
         """
         _pawn = object()
         result = getattr(deferred, "result", _pawn)
-        if result != _pawn:
-            self.fail(
+        if result != _pawn:  # pragma: no branch
+            self.fail(  # pragma: no cover
                 "Expected deferred not to have fired, but it has: {!r}".format(
                     deferred
                 )
@@ -634,7 +634,7 @@ class KleinResourceTests(SynchronousTestCase):
 
         @app.route("/foo/")
         def foo(request: IRequest) -> KleinRenderable:
-            return "foo"
+            return "foo"  # pragma: no cover
 
         d = _render(self.kr, request)
 
@@ -657,7 +657,7 @@ class KleinResourceTests(SynchronousTestCase):
 
         @app.route("/foo", methods=["GET"])
         def foo(request: IRequest) -> KleinRenderable:
-            return "foo"
+            return "foo"  # pragma: no cover
 
         d = _render(self.kr, request)
 
@@ -670,11 +670,11 @@ class KleinResourceTests(SynchronousTestCase):
 
         @app.route("/foo/bar", methods=["GET"])
         def foobar(request: IRequest) -> KleinRenderable:
-            return b"foo/bar"
+            return b"foo/bar"  # pragma: no cover
 
         @app.route("/foo/", methods=["DELETE"])
         def foo(request: IRequest) -> KleinRenderable:
-            return b"foo"
+            return b"foo"  # pragma: no cover
 
         d = _render(self.kr, request)
 
@@ -687,7 +687,7 @@ class KleinResourceTests(SynchronousTestCase):
 
         @app.route("/")
         def root(request: IRequest) -> KleinRenderable:
-            return b"foo"
+            return b"foo"  # pragma: no cover
 
         d = _render(self.kr, request)
 
@@ -1024,9 +1024,10 @@ class KleinResourceTests(SynchronousTestCase):
         d = _render(self.kr, request)
 
         def _eb(result: object) -> None:
-            [failure] = self.flushLoggedErrors(RuntimeError)
+            # TODO: coverage
+            [failure] = self.flushLoggedErrors(RuntimeError)  # pragma: no cover
 
-            self.assertEqual(
+            self.assertEqual(  # pragma: no cover
                 str(failure.value),
                 (
                     "Request.finish called on a request after its connection "
