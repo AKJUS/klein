@@ -67,6 +67,7 @@ class URLDecodeError(Exception):
         @param errors: Sequence of decoding errors, expressed as tuples
             of names and an associated failure.
         """
+        super().__init__(errors)
         self.errors = errors
 
     def __repr__(self) -> str:
