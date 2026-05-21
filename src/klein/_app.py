@@ -607,7 +607,7 @@ class Klein:
         site.displayTracebacks = displayTracebacks
 
         endpoint.listen(site)
-        reactor.run()  # type: ignore[attr-defined]
+        reactor.run()
 
 
 _globalKleinApp = Klein()
