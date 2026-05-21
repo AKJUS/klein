@@ -156,7 +156,7 @@ class KleinResource(Resource):
     def __ne__(self, other: object) -> bool:
         result = self.__eq__(other)
         if result is NotImplemented:
-            return result
+            return NotImplemented
         return not result
 
     def render(self, request: IRequest) -> KleinRenderable:
