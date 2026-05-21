@@ -67,6 +67,7 @@ class URLDecodeError(Exception):
         @param errors: Sequence of decoding errors, expressed as tuples
             of names and an associated failure.
         """
+        super().__init__(errors)
         self.errors = errors
 
     def __repr__(self) -> str:
@@ -156,7 +157,7 @@ class KleinResource(Resource):
     def __ne__(self, other: object) -> bool:
         result = self.__eq__(other)
         if result is NotImplemented:
-            return result
+            return NotImplemented
         return not result
 
     def render(self, request: IRequest) -> KleinRenderable:
